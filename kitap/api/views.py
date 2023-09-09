@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import GenericViewSet
 
 from kitap.api.serializer import KitapSerializer
+from kitap.api.utils import kitapci_queryset_filter
 from kitap.models import Kitap
 
 
@@ -15,5 +16,8 @@ class KitapViewSet(mixins.ListModelMixin,
     serializer_class = KitapSerializer
     permission_classes = [AllowAny]
 
+
+
     def get_queryset(self):
-        return Kitap.objects.all()
+        queryset = kitapci_queryset_filter(self.request)
+        return queryset
